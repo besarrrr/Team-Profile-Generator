@@ -13,42 +13,114 @@ function startApp(){
                 name: 'employee',
                 message: 'What type of postion is this for',
                 choices: ['Manager', 'Engineer','Intern']
-            },
+            }
         ])
         .then(data => {
-           if (data.employee === 0) {
+           if (data.employee == 'Manager' ) {
                 managerInput();
            }
-           else if (data.employee === 1) {
+           else if (data.employee == 'Engineer') {
                 engineerInput();
            }
-           else if (data.employee === 2) {
+           else if (data.employee == 'Intern') {
                 internInput();   
            }
-            //const employee = new Employee(data.name, data.id, data.email);
-            //console.log(employee.getEmail());
         });
 
 }
 
-// if statement - so like start with employee typr and then if statmetns for line of questions
-//each function has thier own inquirer prompt for line of questions 
+function managerInput(){
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: 'What is the name of the Employee?'
+            },
+            {
+                type: 'input',
+                name: 'id',
+                message: 'What is the id of the Employee?'
+            },
+            {
+                type: 'input',
+                name: 'email',
+                message: 'What is the email of the Employee?'
+            },
+            {
+                type: 'input',
+                name: 'officeNumber',
+                message: 'What is this manager\'s office number?'
 
+            }
+        ])
+        .then(data => {
+        const manager = new Manager(data.name, data.id, data.email, data.officeNumber);
+        console.log(manager);
+        })
 
-// {
-//     type: 'input',
-//     name: 'name',
-//     message: 'What is the name of the Employee?'
-// },
-// {
-//     type: 'input',
-//     name: 'id',
-//     message: 'What is the id of the Employee?'
-// },
-// {
-//     type: 'input',
-//     name: 'email',
-//     message: 'What is the email of the Employee?'
-//},
+}
+
+function engineerInput(){
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: 'What is the name of the Employee?'
+            },
+            {
+                type: 'input',
+                name: 'id',
+                message: 'What is the id of the Employee?'
+            },
+            {
+                type: 'input',
+                name: 'email',
+                message: 'What is the email of the Employee?'
+            },
+            {
+                type: 'input',
+                name: 'github',
+                message: 'What is this employee\'s github username'
+
+            }
+        ])
+        .then(data => {
+            const engineer= new Engineer(data.name, data.id, data.email, data.github);
+            console.log(engineer);
+        })
+}
+
+function internInput(){
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: 'What is the name of the Employee?'
+            },
+            {
+                type: 'input',
+                name: 'id',
+                message: 'What is the id of the Employee?'
+            },
+            {
+                type: 'input',
+                name: 'email',
+                message: 'What is the email of the Employee?'
+            },
+            {
+                type: 'input',
+                name: 'school',
+                message: 'Where does/did this employee go to school?'
+
+            }
+        ])
+        .then(data => {
+           const intern = new Intern(data.name, data.id, data.email, data.school);
+           console.log(intern);
+        })
+}
 
 startApp();

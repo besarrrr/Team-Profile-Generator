@@ -1,12 +1,14 @@
 const Manager = require('../lib/Manager')
 
 
-test('creates an engineer object', () => {
-    const manager = new Manager('')
+test('creates a Manager object', () => {
+    const manager = new Manager('Cesar', 1, 'cesar@gmail.com', 2)
 
-    expect(manager.name).toBe('');
-    expect(manager.id).toBe('');
-    expect(manager.email).toBe('');
-    expect(manager.officeNumber).toBe('');
-    
+    expect(manager.officeNumber).toEqual(expect.any(Number));
+ });
+
+ test('gets Manager role', () => {
+    const manager = new Manager('Cesar', 1, 'cesar@gmail.com', 2)
+ 
+    expect(manager.getRole()).toEqual('Manager');
  });

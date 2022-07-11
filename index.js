@@ -1,33 +1,12 @@
-const Employee = require('./lib/Employee');
+const generateHTML = require('./src/page-template');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
 
 const inquirer = require('inquirer');
+const fs = require('fs');
 
-function startApp(){
-    inquirer
-        .prompt([
-            {
-                type: 'checkbox',
-                name: 'employee',
-                message: 'What type of postion is this for',
-                choices: ['Manager', 'Engineer','Intern']
-            }
-        ])
-        .then(data => {
-           if (data.employee == 'Manager' ) {
-                managerInput();
-           }
-           else if (data.employee == 'Engineer') {
-                engineerInput();
-           }
-           else if (data.employee == 'Intern') {
-                internInput();   
-           }
-        });
-
-}
+const team = [];
 
 function managerInput(){
     inquirer
@@ -35,31 +14,55 @@ function managerInput(){
             {
                 type: 'input',
                 name: 'name',
-                message: 'What is the name of the Employee?'
+                message: 'What is the name of the manager?'
             },
             {
                 type: 'input',
                 name: 'id',
-                message: 'What is the id of the Employee?'
+                message: 'What is your employee id number?'
             },
             {
                 type: 'input',
                 name: 'email',
-                message: 'What is the email of the Employee?'
+                message: 'What is your email?'
             },
             {
                 type: 'input',
                 name: 'officeNumber',
-                message: 'What is this manager\'s office number?'
+                message: 'What is your office number?'
 
             }
         ])
         .then(data => {
         const manager = new Manager(data.name, data.id, data.email, data.officeNumber);
-        console.log(manager);
+         team.push(manager); 
+         addEmployee();
         })
 
 }
+
+function addEmployee() {
+    inquirer
+     .prompt([
+        {
+            type: 'checkbox',
+            name: 'employee',
+            message: 'What type of postion are you adding to your team?',
+            choices: ['Engineer','Intern', 'Done!']
+        }
+    ])
+    .then(data => {
+      if (data.employee == 'Engineer') {
+            engineerInput();
+       }
+       else if (data.employee == 'Intern') {
+            internInput();   
+       }
+       else {
+         console.log(team)
+       }
+    })
+  }
 
 function engineerInput(){
     inquirer
@@ -67,28 +70,29 @@ function engineerInput(){
             {
                 type: 'input',
                 name: 'name',
-                message: 'What is the name of the Employee?'
+                message: 'What is the name of this Employee?'
             },
             {
                 type: 'input',
                 name: 'id',
-                message: 'What is the id of the Employee?'
+                message: 'What is the id of this Employee?'
             },
             {
                 type: 'input',
                 name: 'email',
-                message: 'What is the email of the Employee?'
+                message: 'What is the email of this Employee?'
             },
             {
                 type: 'input',
                 name: 'github',
-                message: 'What is this employee\'s github username'
+                message: 'What is this employee\'s github username?'
 
             }
         ])
         .then(data => {
             const engineer= new Engineer(data.name, data.id, data.email, data.github);
-            console.log(engineer);
+            team.push(engineer); 
+            addEmployee();
         })
 }
 
@@ -98,17 +102,17 @@ function internInput(){
             {
                 type: 'input',
                 name: 'name',
-                message: 'What is the name of the Employee?'
+                message: 'What is the name of this Employee?'
             },
             {
                 type: 'input',
                 name: 'id',
-                message: 'What is the id of the Employee?'
+                message: 'What is the id of this Employee?'
             },
             {
                 type: 'input',
                 name: 'email',
-                message: 'What is the email of the Employee?'
+                message: 'What is the email of this Employee?'
             },
             {
                 type: 'input',
@@ -119,8 +123,9 @@ function internInput(){
         ])
         .then(data => {
            const intern = new Intern(data.name, data.id, data.email, data.school);
-           console.log(intern);
+           team.push(intern); 
+           addEmployee();
         })
 }
 
-startApp();
+managerInput();

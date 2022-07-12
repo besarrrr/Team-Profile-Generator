@@ -1,10 +1,11 @@
-const generateHTML = require('./src/page-template');
+const generateHtml = require('./src/htmlgenerater');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
 
 const inquirer = require('inquirer');
 const fs = require('fs');
+const path = require('path');
 
 const team = [];
 
@@ -60,6 +61,7 @@ function addEmployee() {
        }
        else {
          console.log(team)
+         fs.writeFileSync(path.join(__dirname,'/dist/team.html'), generateHtml(team))
        }
     })
   }
